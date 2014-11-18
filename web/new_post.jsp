@@ -2,7 +2,7 @@
 <%@ page import="javax.servlet.http.*,javax.servlet.*" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
-<%! String judul,tanggal,post;%>
+
 
 <!DOCTYPE html>
 <html>
@@ -85,7 +85,7 @@
            
 
             <div id="contact-area">
-                <form method="post" action="#">
+                <form method="post" action="AddPost.jsp">
                     <label for="Judul">Judul:</label>
                     <input type="text" name="Judul" id="Judul" value="${judul}">
 
@@ -94,7 +94,8 @@
                     
                     <label for="Konten">Konten:</label><br>
                     <textarea name="Konten" rows="20" cols="20" id="Konten">${post}</textarea>
-
+                    <input type="hidden" name="mode" value="${param.mode}">
+                    <input type="hidden" name="id_post" value="${param.id_post}">
                     <input type="submit" name="submit" value="Simpan" class="submit-button">
                 </form>
             </div>

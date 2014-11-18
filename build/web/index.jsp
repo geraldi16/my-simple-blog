@@ -54,7 +54,7 @@
 </nav>
 
 <sql:query dataSource="${snapshot}" var="result">
-SELECT * from listpost;
+SELECT * FROM `tucilDB_13511097`.`listpost` ORDER BY `date` DESC;
 </sql:query> 
     
 <div id="home">
@@ -69,7 +69,7 @@ SELECT * from listpost;
                 </div>
                 <p><c:out value="${row.post}"/></p>
                 <p>
-                  <a href="new_post.jsp?mode=1&id_post=<c:out value='${row.id}'/>">Edit</a> | <a href="#">Hapus</a>
+                  <a href="new_post.jsp?mode=1&id_post=<c:out value='${row.id}'/>">Edit</a> | <a href="AddPost.jsp?mode=2&id_post=<c:out value='${row.id}'/>">Hapus</a>
                 </p>
                 </li>
              </c:forEach>
