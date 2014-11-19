@@ -69,7 +69,7 @@ SELECT * FROM `tucilDB_13511097`.`listpost` ORDER BY `date` DESC;
                 </div>
                 <p><c:out value="${row.post}"/></p>
                 <p>
-                  <a href="new_post.jsp?mode=1&id_post=<c:out value='${row.id}'/>">Edit</a> | <a href="AddPost.jsp?mode=2&id_post=<c:out value='${row.id}'/>">Hapus</a>
+                  <a href="new_post.jsp?mode=1&id_post=<c:out value='${row.id}'/>">Edit</a> | <a href="javascript:ConfirmDelete(<c:out value='${row.id}'/>)">Hapus</a>
                 </p>
                 </li>
              </c:forEach>
@@ -133,6 +133,15 @@ SELECT * FROM `tucilDB_13511097`.`listpost` ORDER BY `date` DESC;
       t.src='//www.google-analytics.com/analytics.js';
       z.parentNode.insertBefore(t,z)}(window,document,'script','ga'));
       ga('create',ga_ua);ga('send','pageview');
+      
+      function ConfirmDelete(id){
+	var conf = confirm("Apakah Anda yakin menghapus post ini?");
+	
+	if(conf==true){
+		location.href = 'AddPostProcess.php?mode=2&id='+id;
+	}
+}
+      
 </script>
 
 </body>
