@@ -90,7 +90,8 @@
                     <input type="text" name="Judul" id="Judul" value="${judul}">
 
                     <label for="Tanggal">Tanggal:</label>
-                    <input type="text" name="Tanggal" id="Tanggal" value="${tanggal}">
+                    <input type="text" name="Tanggal" id="Tanggal" value="${tanggal}"onkeyup ="ValidasiTanggal()" onmousedown ="ValidasiTanggal()">
+                    <div id="err_pass" onkeyup ="ValidasiAll()" onmousedown ="ValidasiAll()">format=yyyy-mm-dd</div><br>
                     
                     <label for="Konten">Konten:</label><br>
                     <textarea name="Konten" rows="20" cols="20" id="Konten">${post}</textarea>
@@ -137,6 +138,36 @@
       t.src='//www.google-analytics.com/analytics.js';
       z.parentNode.insertBefore(t,z)}(window,document,'script','ga'));
       ga('create',ga_ua);ga('send','pageview');
+      
+      function ValidasiTanggal(){
+		var tgl = document.getElementById("Tanggal").value;
+		var today = new Date();
+		var cek = new Date(tgl);
+		var err_pass = document.getElementById("err_pass");
+		
+		if(cek>=today){
+			err_pass.innerHTML = "OK";
+			document.getElementById("submit").disabled = false;
+		}else{
+			err_pass.innerHTML = "masukkan tanggal minimal hari ini";
+			document.getElementById("submit").disabled = true;
+		}
+		
+	}
+	
+function ValidasiAll(){
+	var judul = document.getElementById("Judul").value;
+	var konten = document.getElementById("Konten").value;
+	var err_pass = document.getElementById("err_pass");
+	
+	
+	if (judul!=null && konten!=null && err_pass.innerHTML == "OK"){
+		document.getElementById("submit").disabled = false;
+	}else{
+		document.getElementById("submit").disabled = true;
+	}
+    }
+    
 </script>
 
 </body>

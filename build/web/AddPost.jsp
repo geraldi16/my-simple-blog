@@ -69,6 +69,9 @@
               <sql:update dataSource="${snapshot}" var="result">
                     DELETE FROM `tucildb_13511097`.`listpost` WHERE `id`= <%= request.getParameter("id_post")%>;
               </sql:update>
+              <sql:update dataSource="${snapshot}" var="result">
+                    DELETE FROM `tucildb_13511097`.`post-komen` WHERE `id_post`= <%= request.getParameter("id_post")%>;
+              </sql:update>
           </c:otherwise>
           </c:choose>
           

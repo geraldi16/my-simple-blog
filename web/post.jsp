@@ -39,7 +39,7 @@
 
 </head>
 
-<body class="default">
+<body class="default" onload="showKomen(${param.id_post})" onscroll="OnScrollDiv(this)">
 <div class="wrapper">
     
 <sql:setDataSource var="snapshot" driver="com.mysql.jdbc.Driver"
@@ -81,17 +81,21 @@ SELECT `title`,`date`,`post` FROM `tucildb_13511097`.`listpost` WHERE `id`=${par
             <div id="contact-area">
                 <form method="post" action="#">
                     <label for="Nama">Nama:</label>
-                    <input type="text" name="Nama" id="Nama">
+                    <input type="text" name="Nama" id="Nama" value="">
         
                     <label for="Email">Email:</label>
-                    <input type="text" name="Email" id="Email">
+                    <input type="text" name="Email" id="Email" value="" onkeyup="checkEmail(this)"><div id="err_email"></div><br>
                     
                     <label for="Komentar">Komentar:</label><br>
                     <textarea name="Komentar" rows="20" cols="20" id="Komentar"></textarea>
-
-                    <input type="submit" name="submit" value="Kirim" class="submit-button">
+					<input type="hidden" name="id_post" value="<?php echo $id; ?>">
+                    <input type="button" name="button" value="Kirim" onclick="AddKomen(${param.id_post})">
                 </form>
-            </div>
+           </div>
+                <div id="err_mes"></div>
+			<div id="komen">
+        <!--memunculkan komen-komen yang sudah ada-->
+			</div>
 
             <ul class="art-list-body">
                 <li class="art-list-item">
@@ -148,6 +152,56 @@ SELECT `title`,`date`,`post` FROM `tucildb_13511097`.`listpost` WHERE `id`=${par
       t.src='//www.google-analytics.com/analytics.js';
       z.parentNode.insertBefore(t,z)}(window,document,'script','ga'));
       ga('create',ga_ua);ga('send','pageview');
+      
+function showKomen(idpost) {
+  var xmlhttp=new XMLHttpRequest();
+  
+  xmlhttp.onreadystatechange=function() {
+    if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+      document.getElementById("komen").innerHTML=xmlhttp.responseText;
+    }
+  }
+  xmlhttp.open("GET","GetKomen?id="+idpost);
+  xmlhttp.send();
+}
+
+function AddKomen(idpost){
+	 var xmlhttp=new XMLHttpRequest();
+	 var nama =  document.getElementById("Nama").value;
+	 var email =  document.getElementById("Email").value;
+	 var komentar = document.getElementById("Komentar").value;
+	 var veremail = checkEmail();
+     
+  if(nama!=""&&email!=""&&komen!=""&& veremail==true){
+	xmlhttp.onreadystatechange=function() {
+    if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+	  document.getElementById("err_mes").innerHTML= "";
+      document.getElementById("Nama").value=xmlhttp.responseText;
+	  document.getElementById("Email").value=xmlhttp.responseText;
+	  document.getElementById("Komentar").value=xmlhttp.responseText;
+	  showKomen(idpost);
+	 }
+	}
+        xmlhttp.open("GET","AddKomen.jsp?id_post="+idpost+"&Nama="+nama+"&Email="+email+"&Komentar="+komentar);
+	xmlhttp.send();
+  }else{
+	 document.getElementById("err_mes").innerHTML= "masukkan belum tepat/lengkap";
+  }
+}
+function checkEmail(){
+				var err_email = document.getElementById("err_email");
+				var emailStr = document.getElementById("Email").value;
+				var emailRegexStr = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+				var isValid = emailRegexStr.test(emailStr);
+				if(!isValid){
+					err_email.innerHTML = "alamat email tidak valid";
+					return false;
+				}
+				else{
+					err_email.innerHTML = "";
+					return true;
+				}
+}
 </script>
 
 </body>
